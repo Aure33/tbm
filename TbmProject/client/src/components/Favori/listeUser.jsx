@@ -8,7 +8,7 @@ function ListeUser() {
 
     const chargerListUser = async () => {
         try {
-            const response = await axios.get(`/api/user/liste-user`);
+            const response = await axios.get();
             setListUser(response.data);
         } catch (error) {
             console.error('Erreur lors du chargement des profiles', error);
@@ -29,7 +29,7 @@ function ListeUser() {
             <ul>
                 {listUser.map((user) => (
                     <li key={user.nom}>
-                        <Link to={`/profile/${user.nom}`}>{user.nom}</Link>
+                        <Link to={`/profile/${user.name}`}>{user.name}</Link>
                     </li>
                 ))}
             </ul>

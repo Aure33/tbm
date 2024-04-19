@@ -2,7 +2,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import SearchBarBus from "../../../src/components/voirBus/searchBar";
-axios.defaults.baseURL = 'https://tbm-theta.vercel.app';
 
 
 function ListeUser() {
@@ -13,15 +12,10 @@ function ListeUser() {
 
     const ajouterUser = async () => {
         try {
-            // Vérifier si l'API existe avant d'envoyer la requête
-            if (typeof axios.post === 'function') {
-                await axios.post(`/api/user/ajouter-user?nom=${searchValue}`);
-                toast.success('Le profile a bien été ajouté');
-                window.location.href = `/profile/${searchValue}`;
-            } else {
-                // L'API n'existe pas, afficher un message d'erreur
-                toast.error("Le back arrive l'équipe");
-            }
+            // post searchValue in the body of the request
+            await axios.post('/create', { name: searchValue });
+            toast.success('Le profile a bien été ajouté');
+            window.location.href = `/profile/${searchValue}`;
         } catch (error) {
             toast.error(error.response.data.message);
         }

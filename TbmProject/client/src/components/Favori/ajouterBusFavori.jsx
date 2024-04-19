@@ -1,9 +1,36 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import { Like } from './like';
 
-const BusList = ({searchValue}) => {
+const AjouterBusFavori = ({ searchValue, infoUser }) => {
   const [searchResults, setSearchResults] = useState([]);
+
+  const isFavori = (route) => {
+    return infoUser.favoris.some((favori) => favori.route === route);
+  };
+
+  const addFavori = async (routeLineId, stopPointId, routeLine, routeId) => {
+    try {
+      var route = `line=${routeLineId}&stop_point=${stopPointId}&lineID=${routeLine}&route=${routeId}`;
+      await axios.post('/add-favori', { name: infoUser.name, routeLineId, stopPointId, routeLine, routeId, route });
+      toast.success('Le bus a bien été ajouté aux favoris');
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const deleteFavori = async (routeLineId, stopPointId, routeLine, routeId) => {
+    try {
+      var route = `line=${routeLineId}&stop_point=${stopPointId}&lineID=${routeLine}&route=${routeId}`;
+      await axios.delete(`/delete-favori?name=${infoUser.name}`, { data: { route } });
+      toast.success('Le bus a bien été supprimé des favoris');
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
 
   const extractValue = (line) => {
     // si le nom de la ligne commence par Flex'Night, renvoyer la valeur du caractere juste apres
@@ -29,14 +56,6 @@ const BusList = ({searchValue}) => {
     // surprise
     return 'gragawan';
   }
-
-  const ajouterBusFavori = async (idBus) => {
-    try {
-      await axios.post(`/api/user/ajouter-bus-favori?idBus=${idBus}`);
-    } catch (error) {
-      console.error('Erreur lors de l\'ajout du bus favori', error);
-    }
-  };
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
@@ -75,39 +94,52 @@ const BusList = ({searchValue}) => {
       }
 
       setSearchResults(listBus);
-    }, 400);
+    }, 300);
 
     // Nettoyer le timeout précédent à chaque changement de terme de recherche
     return () => clearTimeout(delayDebounceFn);
-  }, [searchValue]);
+  }, [searchValue, infoUser]);
 
   return (
     <>
-        <div className="listBus">
-          {searchResults.map((result) => (
-            <div key={result.id}>
-              {result.stopPoints && result.stopPoints.map((stopPoint) => (
-                <div key={stopPoint.id}>
-                  {stopPoint.routes && stopPoint.routes.map((route) => (
-                    <div key={route.id}>
-                        <p>
-                          <img
-                            src={`./ImagesBus/${extractValue(route.line)}.svg`}
-                            alt="logo"
-                            style={{ width: 50, height: 50, verticalAlign: "middle", padding: 10 }}
-                          />
-                          {result.name} - {route.name}</p>
-                          <button onClick={() => ajouterBusFavori(route.id)}>Ajouter aux favoris</button>
-                    </div>
-                  ))
-                  }
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+      <div className="listBus">
+        {searchResults.map((result) => (
+          <div key={result.id}>
+            {result.stopPoints && result.stopPoints.map((stopPoint) => (
+              <div key={stopPoint.id}>
+                {stopPoint.routes && stopPoint.routes.map((route) => (
+                  <div key={route.id}>
+                    <p>
+                      {isFavori(`line=${route.line.id}&stop_point=${stopPoint.id}&lineID=${extractValue(route.line)}&route=${route.id}`) ?
+                        <button onClick={() => deleteFavori(route.line.id, stopPoint.id, extractValue(route.line), route.id)} style={{ backgroundColor: "transparent", border: "none", color: "red" }}>❤️</button> :
+                        <button onClick={() => addFavori(route.line.id, stopPoint.id, extractValue(route.line), route.id)} style={{ backgroundColor: "transparent", border: "none", color: "white" }}>🤍</button>
+                      }
+                      <Like />
+                      <Link
+                        to={`voir-horaires?line=${route.line.id}&stop_point=${stopPoint.id}&lineID=${extractValue(route.line)}&route=${route.id}`}
+                        style={{ color: "white" }}
+                      >
+                        <img
+                          src={`../ImagesBus/${extractValue(route.line)}.svg`}
+                          alt="logo"
+                          style={{ width: 50, height: 50, verticalAlign: "middle", padding: 10 }}
+                        />
+                        {result.name} - {route.name}
+                      </Link>
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
     </>
   );
-}
+};
 
-export default BusList;
+export default AjouterBusFavori;
