@@ -2,9 +2,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Like } from './like';
+import { useSelector } from 'react-redux';
 
-const BusList = ({searchValue}) => {
+const BusList = ({ searchValue, infoUser }) => {
   const [searchResults, setSearchResults] = useState([]);
+  // const [infoFavori, setInfoFavori] = useState([]); // Assurez-vous que la valeur initiale correspond au type attendu
+  const currentUser = useSelector(state => state.currentUser);
 
   const extractValue = (line) => {
     // si le nom de la ligne commence par Flex'Night, renvoyer la valeur du caractere juste apres
@@ -68,43 +72,54 @@ const BusList = ({searchValue}) => {
       }
 
       setSearchResults(listBus);
-    }, 400);
+    }, 300);
 
     // Nettoyer le timeout précédent à chaque changement de terme de recherche
     return () => clearTimeout(delayDebounceFn);
-  }, [searchValue]);
+  }, [searchValue, infoUser]);
 
   return (
     <>
-        <div className="listBus">
-          {searchResults.map((result) => (
-            <div key={result.id}>
-              {result.stopPoints && result.stopPoints.map((stopPoint) => (
-                <div key={stopPoint.id}>
-                  {stopPoint.routes && stopPoint.routes.map((route) => (
-                    <div key={route.id}>
-                      <Link
+      <div className="listBus">
+        {searchResults.map((result) => (
+          <div key={result.id}>
+            {result.stopPoints && result.stopPoints.map((stopPoint) => (
+              <div key={stopPoint.id}>
+                {stopPoint.routes && stopPoint.routes.map((route) => (
+                  <div key={route.id}>
+                    <p>
+                    {currentUser.uid !== '' && (
+                      <Like
+                        routeLineId={route.line.id}
+                        stopPointId={stopPoint.id}
+                        routeLine={extractValue(route.line)}
+                        routeId={route.id}
+                        uid={currentUser.uid}
+                        nomArret={result.name}
+                        nomDestination={route.name}
+                      />
+                    )}
+                    <Link
                         to={`voir-horaires?line=${route.line.id}&stop_point=${stopPoint.id}&lineID=${extractValue(route.line)}&route=${route.id}`}
                         style={{ color: "white" }}
                       >
-                        <p>
-                          <img
-                            src={`./ImagesBus/${extractValue(route.line)}.svg`}
-                            alt="logo"
-                            style={{ width: 50, height: 50, verticalAlign: "middle", padding: 10 }}
-                          />
-                          {result.name} - {route.name}</p>
+                        <img
+                          src={`../ImagesBus/${extractValue(route.line)}.svg`}
+                          alt="logo"
+                          style={{ width: 50, height: 50, verticalAlign: "middle", padding: 10 }}
+                        />
+                        {result.name} - {route.name}
                       </Link>
-                    </div>
-                  ))
-                  }
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </>
   );
-}
+};
 
 export default BusList;

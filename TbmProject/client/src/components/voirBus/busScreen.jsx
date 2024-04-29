@@ -67,7 +67,7 @@ const BusScreen = () => {
                                         {busData.destinations[destinationId].map((entry, entryIndex) => (
                                             <div key={entryIndex}>
                                                 <div>
-                                                <p>Prochain départ: {formatTime(entry.departure)} <button> {entry.vehicle_id} </button></p>
+                                                <p>Prochain départ: {formatTime(entry.departure)}</p>
                                                 </div>
                                                 <p>Attente: {updateWaitTime(entry.departure)}</p>
                                             </div>
