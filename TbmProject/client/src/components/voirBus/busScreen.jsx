@@ -57,7 +57,7 @@ const BusScreen = () => {
         <div>
             {busData ? (
                 <>
-                    <img src={`./ImagesBus/${lineID}.svg`} alt="logo" style={{ width: 50, height: 50, verticalAlign: "middle", padding: 10 }} />
+                    <img src={`../ImagesBus/${lineID}.svg`} alt="logo" style={{ width: 50, height: 50, verticalAlign: "middle", padding: 10 }} />
                     {busData.destinations.length !== 0 ? (
                         <>
                             {
@@ -84,7 +84,7 @@ const BusScreen = () => {
             ) : (
                 <p>Loading...</p>
             )}
-            <Link to="/">Retour à la page principale</Link>
+            <Link to="/tbhess">Retour à la page principale</Link>
         </div>
     );
 }

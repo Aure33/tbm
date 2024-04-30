@@ -188,5 +188,38 @@ import('./config.js').then((config) => {
   });
 });
 
+app.delete("/delete-all-favori", async (req, res) => {
+  try {
+    const { uid } = req.query;
+    if (uid.trim().length === 0) {
+      return res.status(400).send({ message: "t'es pas co le sang'" });
+    }
+    const snapshot = await getDocs(User);
+    let nomPresent = false;
+    snapshot.docs.forEach(async (document) => {
+      if (document.data().uid === uid) {
+        nomPresent = true;
+        const userDocRef = doc(User, document.id);
+        await updateDoc(userDocRef, {
+          favoris: [],
+        });
+        const updatedDoc = await getDoc(userDocRef);
+        if (updatedDoc.exists()) {
+          res.send(updatedDoc.data());
+        } else {
+          res.status(404).send({ message: "Document not found" });
+        }
+      }
+    });
+
+    if (!nomPresent) {
+      return res.status(404).send({ message: "Not found" });
+    }
+  } catch (error) {
+    return res.status(404).send({ message: "Not found" });
+  }
+});
+
+
 
 app.listen(4000, () => console.log("Up & RUnning *4000"));

@@ -6,16 +6,19 @@ const ListeFavoris = () => {
     const currentUser = useSelector(state => state.currentUser);
     return (
         <div>
-            <Link to="/">Retour à la page principale</Link>
-            <>
-            <h2 align="center">Bus favori</h2>
-            </>
+            <Link to="/tbhess">Retour à la page principale</Link>
+            <h2 style={{ textAlign: 'center' }}>Bus favori</h2>
             <div id='liste-favori'></div>
-                {currentUser.favoris.map((favori, index) => (
+            {currentUser.favoris.length === 0 ? (
+                <p style={{ textAlign: 'center' }}>Pas de favoris</p>
+            ) : (
+                currentUser.favoris.map((favori, index) => (
                     <AfficherBusFavori key={index} favori={favori} />
-                ))}
+                ))
+            )}
         </div>
     );
+    
 }
 
 

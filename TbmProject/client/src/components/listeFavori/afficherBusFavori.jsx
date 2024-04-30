@@ -76,14 +76,14 @@ const AfficherBusFavori = (favori) => {
                         nomDestination={nomDestination}
                       />
                     )}
-                    <img src={`./ImagesBus/${routeLine}.svg`} alt="logo" style={{ width: 50, height: 50, verticalAlign: "middle", padding: 10 }} /> 
+                    <img src={`../ImagesBus/${routeLine}.svg`} alt="logo" style={{ width: 50, height: 50, verticalAlign: "middle", padding: 10 }} /> 
                     {nomArret} - {nomDestination}
                     </p>
                     {busData.destinations.length !== 0 ? (
-                        <>
+                        <div style={{ display: 'flex', flexDirection: 'row' }}>
                             {
                                 Object.keys(busData.destinations).map((destinationId, index) => (
-                                    <div key={index}>
+                                    <div key={index} style={{ marginRight: '40px' }}>
                                         <h2>{busData.destinations[destinationId][0].destination_name}</h2>
                                         {busData.destinations[destinationId].map((entry, entryIndex) => (
                                             <div key={entryIndex}>
@@ -93,7 +93,7 @@ const AfficherBusFavori = (favori) => {
                                     </div>
                                 ))
                             }
-                        </>
+                        </div>
                     ) : (
                         <p>Pas de bus en circulation</p>
                     )}

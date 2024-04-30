@@ -18,7 +18,7 @@ const Menu = () => {
             <SearchBarBus onSearchInputChange={handleSearchInputChange} placeholder="Rechercher un arrêt"/>
             <BusList searchValue={searchValue} />
             {currentUser.uid !== '' && (
-            <Link to="/favoris">Voir mes favoris</Link>
+            <Link to="/tbhess/favoris">Voir mes favoris</Link>
             )}
         </>
     );

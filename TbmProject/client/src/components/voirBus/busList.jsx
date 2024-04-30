@@ -100,7 +100,7 @@ const BusList = ({ searchValue, infoUser }) => {
                       />
                     )}
                     <Link
-                        to={`voir-horaires?line=${route.line.id}&stop_point=${stopPoint.id}&lineID=${extractValue(route.line)}&route=${route.id}`}
+                        to={`/tbhess/voir-horaires?line=${route.line.id}&stop_point=${stopPoint.id}&lineID=${extractValue(route.line)}&route=${route.id}`}
                         style={{ color: "white" }}
                       >
                         <img

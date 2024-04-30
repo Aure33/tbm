@@ -12,10 +12,9 @@ import NavBar from '@/components/NavBar.jsx';
 import ListFavoris from "@/components/listeFavori/listFavoris.jsx";
 import store from '@/store/index';
 import { Provider } from 'react-redux';
-import '../../serveur/config.js';
-
-//axios.defaults.baseURL = 'https://tbm-theta.vercel.app';
-axios.defaults.baseURL = 'http://localhost:4000';
+import { url } from '../../serveur/config.js';
+url
+axios.defaults.baseURL = url;
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -26,9 +25,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <h1> TbHESS </h1>
     <Router>
       <Routes>
-        <Route exact path="/" element={<Menu />} />
-        <Route path="/voir-horaires/" element={<BusScreen />} />
-        <Route path="/favoris" element={<ListFavoris />} />
+        <Route exact path="/tbhess" element={<Menu />} />
+        <Route path="/tbhess/voir-horaires/" element={<BusScreen />} />
+        <Route path="/tbhess/favoris" element={<ListFavoris />} />
       </Routes>
     </Router>
     <p>V1.2</p>
