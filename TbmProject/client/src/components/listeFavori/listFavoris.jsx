@@ -6,7 +6,7 @@ const ListeFavoris = () => {
     const currentUser = useSelector(state => state.currentUser);
     return (
         <div>
-            <Link to="/tbhess">Retour à la page principale</Link>
+            <Link to="/">Retour à la page principale</Link>
             <h2 style={{ textAlign: 'center' }}>Bus favori</h2>
             <div id='liste-favori'></div>
             {currentUser.favoris.length === 0 ? (

@@ -25,9 +25,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <h1> TbHESS </h1>
     <Router>
       <Routes>
-        <Route exact path="/tbhess" element={<Menu />} />
-        <Route path="/tbhess/voir-horaires/" element={<BusScreen />} />
-        <Route path="/tbhess/favoris" element={<ListFavoris />} />
+        <Route exact path="/" element={<Menu />} />
+        <Route path="/voir-horaires/" element={<BusScreen />} />
+        <Route path="/favoris" element={<ListFavoris />} />
       </Routes>
     </Router>
     <p>V1.2</p>

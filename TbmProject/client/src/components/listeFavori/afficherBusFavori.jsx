@@ -76,7 +76,7 @@ const AfficherBusFavori = (favori) => {
                         nomDestination={nomDestination}
                       />
                     )}
-                    <img src={`../ImagesBus/${routeLine}.svg`} alt="logo" style={{ width: 50, height: 50, verticalAlign: "middle", padding: 10 }} /> 
+                    <img src={`./ImagesBus/${routeLine}.svg`} alt="logo" style={{ width: 50, height: 50, verticalAlign: "middle", padding: 10 }} /> 
                     {nomArret} - {nomDestination}
                     </p>
                     {busData.destinations.length !== 0 ? (
