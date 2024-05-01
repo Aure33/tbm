@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter , Route, Routes } from 'react-router-dom';
 import Menu from '@/components/Menu';
 import BusScreen from '@/components/voirBus/busScreen.jsx';
 import axios from 'axios';
@@ -13,7 +13,6 @@ import ListFavoris from "@/components/listeFavori/listFavoris.jsx";
 import store from '@/store/index';
 import { Provider } from 'react-redux';
 import { url } from '../../serveur/config.js';
-url
 axios.defaults.baseURL = url;
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -23,13 +22,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthContextProvider>
       <NavBar />
     <h1> TbHESS </h1>
-    <Router>
+    <HashRouter>
       <Routes>
         <Route exact path="/" element={<Menu />} />
         <Route path="/voir-horaires/" element={<BusScreen />} />
         <Route path="/favoris" element={<ListFavoris />} />
       </Routes>
-    </Router>
+    </HashRouter>
     <p>V1.2</p>
     </AuthContextProvider>
     </QueryClientProvider>

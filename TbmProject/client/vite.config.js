@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
+  base: './',
   plugins: [react()],
   optimizeDeps: {
     include: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
@@ -17,6 +17,7 @@ export default defineConfig({
     commonjsOptions: {
       transformMixedEsModules: true,
     },
+    chunkSizeWarningLimit: 1000, // Augmentez cette limite selon vos besoins
   },
   resolve: {
     alias: {
