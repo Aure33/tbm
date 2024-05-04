@@ -16,6 +16,8 @@ const currentUserReducer = (state = initialState, action) => {
         ...state,
         favoris: action.payload,
       };
+    case 'RESET_USER':
+      return initialState;
     default:
       return state;
   }
@@ -33,6 +35,12 @@ export const logoutUser = () => ({
 export const setFavoris = (favoris) => ({
   type: 'SET_FAVORIS',
   payload: favoris,
+});
+
+// remet le state à son état initial
+export const resetUser = () => ({
+  type: 'SET_CURRENT_USER',
+  payload: initialState,
 });
 
 export default currentUserReducer;
