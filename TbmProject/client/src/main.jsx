@@ -14,7 +14,7 @@ import store from '@/store/index';
 import { Provider } from 'react-redux';
 
 axios.defaults.baseURL =
-'https://tbm-theta.vercel.app';
+'https://tbm-udtv.vercel.app';
 //'http://localhost:4000';
 
 const queryClient = new QueryClient();
