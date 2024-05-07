@@ -10,7 +10,7 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth'
 
-import { initFirebase } from "../../../serveur/config.js"
+import { initFirebase } from "../../config.js"
 
 const { auth } = initFirebase(); 
 
