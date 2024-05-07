@@ -1,11 +1,15 @@
 {
-    "projects": [
+    "version": 2,
+    "builds": [
       {
-        "root": "client",
-        "build": {
-          "command": "npm run build"
-        },
-        "output": "client/build" 
+        "dir": "client",
+        "command": "npm run build"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/client/$1"
       }
     ]
   }
