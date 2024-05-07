@@ -12,8 +12,11 @@ import NavBar from '@/components/NavBar.jsx';
 import ListFavoris from "@/components/listeFavori/listFavoris.jsx";
 import store from '@/store/index';
 import { Provider } from 'react-redux';
-import { url } from '../../serveur/config.js';
-axios.defaults.baseURL = url;
+
+axios.defaults.baseURL =
+'https://tbm-theta.vercel.app';
+//'http://localhost:4000';
+
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

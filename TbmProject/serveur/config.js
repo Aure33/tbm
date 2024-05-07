@@ -2,10 +2,6 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, collection } from 'firebase/firestore';
 
-export const url = 
-'https://tbm-theta.vercel.app';
-//'http://localhost:4000';
-
 const firebaseConfig = {
   apiKey: "AIzaSyAJT4VLE-VHbEP1tChWn9cWo-ABXz45h7E",
   authDomain: "tbhess-335aa.firebaseapp.com",
