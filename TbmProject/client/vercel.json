@@ -1,8 +1,12 @@
 {
-    "routes": [
-        {
-            "src": "/[^.]+",
-            "dest": "/index.html"
-        }
+    "projects": [
+      {
+        "root": "client",
+        "build": {
+          "command": "npm run build"
+        },
+        "output": "client/build" 
+      }
     ]
-}
+  }
+  
