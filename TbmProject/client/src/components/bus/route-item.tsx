@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { StopPointType, type Route } from "../../types";
+import { type Route, StopPointType } from "../../types";
 
 export type RouteProps = {
 	stopPoint: StopPointType;
@@ -7,6 +7,9 @@ export type RouteProps = {
 };
 
 export function Route({ route, stopPoint }: RouteProps) {
+
+	console.log(route, stopPoint);
+
 	return (
 		<Link
 			to={`voir-horaires?line=${

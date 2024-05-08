@@ -5,7 +5,7 @@ import { Optional } from "@tanstack/react-query";
 import { cn } from "../../utils";
 
 export type BusLineProps = {
-	busLine: Line;
+	busLine: Optional<Line, "isChartered" | "isHidden" | "isSpecial">;
 	className: string;
 };
 
@@ -14,13 +14,18 @@ export function BusLine({ busLine, className }: Optional<BusLineProps, 'classNam
 
 	const busColor = useBusColor(lineType);
 
+	const isTram = lineType === "Tram";
+
+	console.log(busLine);
+
 	const isTBNight = busLine.name === "TBNight";
 
 
 	return (
 		<div className={cn(
 			`rounded-md px-2 py-1 flex justify-center items-center text-white relative`,
-			className
+			className,
+			{ "rounded-full w-7": isTram, }
 		
 		)} style={{ backgroundColor: busColor }}>
 			{ isTBNight ? (

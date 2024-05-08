@@ -6,6 +6,7 @@ import ReactDOM from "react-dom/client";
 import { Home } from "./components/home";
 import { TBMOutlet } from "./components/tbm-outlet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import BusScreen from "./components/bus/bus-screen";
 
 const router = createBrowserRouter([
 	{
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/voir-horaires/",
-				// element: <BusScreen />,
+				element: <BusScreen />,
 			},
 		],
 	},

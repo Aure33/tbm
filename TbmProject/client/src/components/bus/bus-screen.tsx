@@ -1,47 +1,37 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { Destination } from '@/types';
+import { useBusDetails } from '@hooks/use-bus-details';
+import { useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { BusLine } from './bus-line';
 
 const BusScreen = () => {
-    const location = useLocation();
-    const params = new URLSearchParams(location.search);
-    const line = params.get("line");
-    const stop_point = params.get("stop_point");
-    const lineID = params.get("lineID");
-    const route = params.get("route");
+    const [urlParams] = useSearchParams();
+    const line = urlParams.get("line") || "";
+    const stop_point = urlParams.get("stop_point") || "";
+    const lineID = urlParams.get("lineID") || "";
+    const route = urlParams.get("route") || "";
 
-    const [busData, setBusData] = useState(null);
 
-    // Fonction pour effectuer une nouvelle requête toutes les secondes
-    const fetchData = () => {
-        fetch(`https://ws.infotbm.com/ws/1.0/get-realtime-pass-by-id/${line}/${stop_point}/${lineID}/${route}`)
-            .then((response) => response.json())
-            .then((data) => setBusData(data))
-            .catch((error) => console.error('Error fetching bus data', error));
-    };
+    const transportLine = {
+        id: lineID,
+        name: line,
+    }
 
-    useEffect(() => {
-        fetchData();
-        const interval = setInterval(() => {
-            fetchData();
-        }, 1000);
+    const {isLoading, data: busData } = useBusDetails({line: line, lineID: lineID, route: route, stopPoint: stop_point});
 
-        return () => clearInterval(interval);
-    }, []);
-
-    const formatTime = (dateString) => {
+    const formatTime = (dateString: string) => {
         const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
-        return new Date(dateString).toLocaleDateString('fr-FR', options);
+        return new Date(dateString).toLocaleDateString('fr-FR', options as Intl.DateTimeFormatOptions);
     }
     
-    const updateWaitTime = (departureTime) => {
+    const updateWaitTime = (departureTime: string) => {
         const now = new Date();
-        const timeDifference = Math.floor((new Date(departureTime) - now) / 1000);
+        const timeDifference = Math.floor((Number(new Date(departureTime)) - Number(now)) / 1000);
         const hours = Math.floor(timeDifference / 3600);
         const minutes = Math.floor((timeDifference % 3600) / 60);
         const seconds = timeDifference % 60;
         let moyenDeTransport = "Bus";
-        if (lineID === "59" || lineID === "60" || lineID === "61" || lineID === "62") moyenDeTransport = "Tram";
+        if (["59", "60", "61", "62"].includes(lineID)) moyenDeTransport = "Tram";
         if (seconds < 0) return `${moyenDeTransport} à l'arrêt !`;
         if (hours > 0) return `${hours}h ${minutes}min ${seconds}s`;
         if (minutes > 0 && minutes <= 1 && seconds <= 1) return `${minutes} minute ${seconds} seconde`;
@@ -55,16 +45,16 @@ const BusScreen = () => {
 
     return (
         <div>
-            {busData ? (
+            {busData && (
                 <>
-                    <img src={`./ImagesBus/${lineID}.svg`} alt="logo" style={{ width: 50, height: 50, verticalAlign: "middle", padding: 10 }} />
+                    <BusLine busLine={transportLine}/>
                     {busData.destinations.length !== 0 ? (
                         <>
                             {
-                                Object.keys(busData.destinations).map((destinationId, index) => (
+                                Object.keys(busData.destinations).map((destinationId: string, index) => (
                                     <div key={index}>
                                         <h2>{busData.destinations[destinationId][0].destination_name}</h2>
-                                        {busData.destinations[destinationId].map((entry, entryIndex) => (
+                                        {busData.destinations[destinationId].map((entry: Destination, entryIndex: number) => (
                                             <div key={entryIndex}>
                                                 <p>Prochain départ: {formatTime(entry.departure)}</p>
                                                 <p>Attente: {updateWaitTime(entry.departure)}</p>
@@ -79,10 +69,9 @@ const BusScreen = () => {
                     )}
 
                 </>
-            ) : (
-                <p>Loading...</p>
             )}
-            <Link to="/tbm/">Retour à la page principale</Link>
+            {isLoading && <p>Chargement...</p>}
+            <Link to="/">Retour à la page principale</Link>
         </div>
     );
 }

@@ -21,3 +21,37 @@ export interface Line extends BusItemType {
 	isHidden: boolean;
 	isSpecial: boolean;
 }
+
+export interface BusDetailsProps {
+	line: string;
+	stopPoint: string;
+	lineID: string;
+	route: string;
+}
+
+export interface BusDetails {
+	destinations: Destination[string];
+}
+
+export interface Destination {
+	vehicleLattitude: number;
+	vehicleLongitude: number;
+	waitTimeText: string;
+	tripID: string;
+	scheduleID: string;
+	destinationID: string;
+	destinationName: string;
+	departure: string;
+	departureCommande: string;
+	departureTheorique: string;
+	arrival: string;
+	arrivalCommande: string;
+	arrivalTheorique: string;
+	comment: string;
+	realTime: string;
+	waitTime: string;
+	updatedAt: string;
+	vehicleID: string;
+	vehiclePositionUpdatedAt: string;
+	origin: string;
+}

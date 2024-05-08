@@ -1,12 +1,7 @@
-import { useEffect } from "react";
 import { useBusList } from "./use-bus-list";
 
 export const useBusRoutes = (searchInput: string) => {
-	const { status, data, refetch } = useBusList(searchInput);
-
-	useEffect(() => {
-		refetch();
-	}, [searchInput, refetch]);
+	const { status, data } = useBusList(searchInput);
 
 	return {
 		data:
@@ -19,6 +14,5 @@ export const useBusRoutes = (searchInput: string) => {
 				})
 			) || [],
 		status: status,
-		refetch,
 	};
 };
