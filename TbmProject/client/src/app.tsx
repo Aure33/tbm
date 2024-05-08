@@ -5,6 +5,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Home } from "./components/home";
 import { TBMOutlet } from "./components/tbm-outlet";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createBrowserRouter([
 	{
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
 		element: <TBMOutlet />,
 		children: [
 			{
-				path: "/tbm",
+				path: "/",
 				element: <Home />,
 			},
 			{
@@ -31,6 +32,8 @@ const router = createBrowserRouter([
 	},
 ]);
 
+const queryClient = new QueryClient();
+
 const rootElement: HTMLElement | null = document.getElementById(
 	"root"
 ) as HTMLElement;
@@ -38,7 +41,9 @@ const rootElement: HTMLElement | null = document.getElementById(
 ReactDOM.createRoot(rootElement).render(
 	<React.StrictMode>
 		<NextUIProvider>
-			<RouterProvider router={router} />
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider router={router} />
+			</QueryClientProvider>
 		</NextUIProvider>
 	</React.StrictMode>
 );

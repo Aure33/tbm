@@ -1,14 +1,23 @@
 import {
-	Button,
+	Dropdown,
+	DropdownItem,
+	DropdownMenu,
+	DropdownTrigger,
 	Navbar,
 	NavbarBrand,
 	NavbarContent,
-	NavbarItem,
+	NavbarMenuToggle,
 } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import { Icons } from "./icons";
+import { useState } from "react";
+
+
 
 export function TBMNavbar() {
+
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 	return (
 		<Navbar
 			className="h-24 flex-grow bg-color-none z-0 absolute"
@@ -19,20 +28,25 @@ export function TBMNavbar() {
 					<img src="logo_tbhess.png" className="h-20" />
 				</NavbarBrand>
 			</NavbarContent>
-			<NavbarContent justify="center" className="mr-2">
-				<NavbarItem>
-					<Link to="/tbm/profiles/">
-						<Button
-							size="sm"
-							variant="flat"
-							className="text-gray text-sm"
-							startContent={
-								<Icons.usersList color="gray" size={16} />
-							}>
-							Liste des profils
-						</Button>
-					</Link>
-				</NavbarItem>
+			<NavbarContent justify="center" className="mr-4">
+				<Dropdown isOpen={isMenuOpen} onOpenChange={setIsMenuOpen}>
+					<DropdownTrigger>
+						<NavbarMenuToggle isDisabled={false} className="h-8" data-open={isMenuOpen} aria-label={isMenuOpen ? "Close menu" : "Open menu"}/>
+					</DropdownTrigger>
+					<DropdownMenu aria-label="menu-dropdown" itemClasses={{
+						base: "gap-4",
+					}}>
+						<DropdownItem 
+							textValue="users"
+							startContent={<Icons.usersList />}
+							description="Consulter la liste des utilisateurs"
+							>
+							<Link to="/tbm/profiles/">
+								Utilisateurs
+							</Link>
+						</DropdownItem>
+					</DropdownMenu>
+				</Dropdown>
 			</NavbarContent>
 		</Navbar>
 	);

@@ -1,17 +1,8 @@
-import { useState } from "react";
-import { SearchBar } from "./voirBus/search-bar";
-import { BusList } from "./voirBus/bus-list";
+import { SearchBar } from "./bus/search-bar";
 
 export const Home = () => {
-	const [searchValue, setSearchValue] = useState("");
-	const handleSearchInputChange = (searchValue: string) => {
-		setSearchValue(searchValue);
-	};
 
 	return (
-		<>
-			<SearchBar onSearchInputChange={handleSearchInputChange} />
-			<BusList searchValue={searchValue} />
-		</>
+		<SearchBar/>
 	);
 };

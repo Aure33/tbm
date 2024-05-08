@@ -4,7 +4,6 @@
 
 /* Reset CSS */
 :root {
-	font-size: small;
 	background-image: url("background.png");
 	background-size: cover;
 	background-repeat: no-repeat;
