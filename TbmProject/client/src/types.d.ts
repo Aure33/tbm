@@ -4,10 +4,10 @@ export type BusItemType = {
 };
 
 export interface BusType extends BusItemType {
-	stopPoints: StopPointType[];
+	stopPoints: StopPoint[];
 }
 
-export interface StopPointType extends BusItemType {
+export interface StopPoint extends BusItemType {
 	hasWheelchairBoarding: boolean;
 	routes: Route[];
 }

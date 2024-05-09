@@ -10,16 +10,12 @@ export type BusLineProps = {
 };
 
 export function BusLine({ busLine, className }: Optional<BusLineProps, 'className'>) {
+
 	const [lineType, lineName] = busLine.name.split(" ");
-
-	const busColor = useBusColor(lineType);
-
 	const isTram = lineType === "Tram";
-
-	console.log(busLine);
-
 	const isTBNight = busLine.name === "TBNight";
 
+	const busColor = useBusColor(lineType);
 
 	return (
 		<div className={cn(
